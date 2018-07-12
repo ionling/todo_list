@@ -17,6 +17,7 @@
 -   Django v1.8
 -   Django REST Framework v3.6(to support Django v1.8)
 -   Python v2.7
+-   PostgreSQL
 
 ## Models
 
