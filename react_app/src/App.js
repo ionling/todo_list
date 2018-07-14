@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { ListGroup } from "reactstrap";
 import logo from "./logo.svg";
 import "./App.css";
 import TodoItem from "./components/TodoItem";
@@ -13,6 +14,15 @@ class App extends Component {
         const todos = this.state.todos.map(todo => (
             <TodoItem
                 value={todo}
+                key={todo.id}
+                onDoneChange={done => {
+                    todo.done = done;
+                    const todos = this.state.todos.filter(
+                        x => x.id !== todo.id,
+                    );
+                    todos.push(todo);
+                    this.setState({ todos });
+                }}
                 onDelete={() => {
                     const todos = this.state.todos.filter(x => x !== todo);
                     this.setState({ todos });
@@ -29,12 +39,16 @@ class App extends Component {
                     To get started, edit <code>src/App.js</code> and save to
                     reload.
                 </p>
-                <TodoInput
-                    onAdd={todo =>
-                        this.setState({ todos: this.state.todos.concat(todo) })
-                    }
-                />
-                <ul style={{ listStyleType: "none" }}>{todos}</ul>
+                <div style={{ width: "500px", margin: "auto" }}>
+                    <TodoInput
+                        onAdd={todo =>
+                            this.setState({
+                                todos: this.state.todos.concat(todo),
+                            })
+                        }
+                    />
+                    <ListGroup style={{ marginTop: "17px" }}>{todos}</ListGroup>
+                </div>
             </div>
         );
     }

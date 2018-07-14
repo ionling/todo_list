@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button, Input, InputGroup, InputGroupAddon } from "reactstrap";
 import { Todo } from "../Models";
 
 class TodoInput extends Component {
@@ -9,22 +10,26 @@ class TodoInput extends Component {
     handleChange = event => this.setState({ title: event.target.value });
 
     render = () => (
-        <div>
-            <input
+        <InputGroup>
+            <Input
                 value={this.state.title}
                 onChange={this.handleChange}
                 placeholder="new todo"
             />
-            <button
-                onClick={() => {
-                    const todo = new Todo(this.state.title);
-                    this.props.onAdd(todo);
-                    this.setState({ title: "" });
-                }}
-            >
-                Add
-            </button>
-        </div>
+            <InputGroupAddon addonType="append">
+                <Button
+                    onClick={() => {
+                        if (this.state.title === "") return;
+                        const todo = new Todo(this.state.title);
+                        this.props.onAdd(todo);
+                        this.setState({ title: "" });
+                    }}
+                    color="primary"
+                >
+                    Add
+                </Button>
+            </InputGroupAddon>
+        </InputGroup>
     );
 }
 
