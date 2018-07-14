@@ -1,0 +1,17 @@
+## User
+
+### Login
+POST http://127.0.0.1:8000/api/login
+content-type: application/json
+
+{
+    "userName" : "john"
+}
+### Login(GET)
+GET http://127.0.0.1:8000/api/login
+
+### Casual
+GET http://127.0.0.1:8000/api/casual
+
+### Login(OPTIONS)
+OPTIONS http://127.0.0.1:8000/api/login

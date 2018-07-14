@@ -39,11 +39,18 @@ const todo = {
 
 ## RESTful API
 
+### Todo
+
 -   Add: `POST /todos`
 -   Delete: `DELETE /todos/:id`
 -   Mark as done: `PATCH /todos/:id`
 -   Modify: `PUT /todos/:id`
 -   List all: `GET /todos`
+
+### User
+
+-   Login: `POST /users/login`
+-   Get a casual user: `GET users/casual`
 
 ## Todo
 

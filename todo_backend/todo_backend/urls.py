@@ -14,7 +14,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from api import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/login', views.login),
+    url(r'^api/casual', views.get_casual),
 ]
