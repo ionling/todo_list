@@ -25,7 +25,16 @@ def login(request):
         token, _ = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
     except ObjectDoesNotExist:
-        return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        return Response(
+            {
+                'message': 'Validation Failed',
+                'errors': [{
+                    'resource': 'login',
+                    'field': 'username',
+                    'message': 'User with specified username not exist.'
+                }]
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     except KeyError:
         return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -54,8 +63,13 @@ class TodoViewSet(viewsets.ModelViewSet):
     #     todos = Todo.objects.filter(user=request.user)
     #     return Response(TodoSerializer(todos, many=True).data)
 
-    # def create(self, request):
-    #     pass
+    def create(self, request):
+        data = request.data
+        data['user'] = request.user
+        print data
+        todo = Todo.objects.create(**data)
+        return Response(TodoSerializer(todo).data)
+
 
     # def retrieve(self, request, pk=None):
     #     todo = Todo.objects.get(pk=pk)

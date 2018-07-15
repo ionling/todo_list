@@ -11,12 +11,17 @@ class Auth extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        const response = await API.post("/users/login", this.state);
-        const token = response.data.token;
-        util.storeToken(token);
-        // Redirect to home page.
-        // Refer: https://serverless-stack.com/chapters/redirect-on-login-and-logout.html
-        this.props.history.push("/");
+        try {
+            const response = await API.post("/users/login", this.state);
+            const token = response.data.token;
+            util.storeToken(token);
+            // Redirect to home page.
+            // Refer: https://serverless-stack.com/chapters/redirect-on-login-and-logout.html
+            this.props.history.push("/");
+        } catch (error) {
+            console.warn(error);
+            console.warn(error.response);
+        }
     };
 
     handleSecondaryClick = async () => {
@@ -26,8 +31,6 @@ class Auth extends Component {
 
     // Use arrow function to avoid `this` problem.
     handleInputChange = event => {
-        console.log(this.state);
-        console.log(this.setState);
         const target = event.target;
         this.setState({
             [target.name]: target.value,
