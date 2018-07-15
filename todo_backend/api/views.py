@@ -3,12 +3,15 @@ import string
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from models import Todo
+from serializers import TodoSerializer
 
+# TODO: Refator with ObtainAuthToken.
 @api_view(['POST'])
 def login(request):
     """
@@ -19,7 +22,7 @@ def login(request):
         user = User.objects.get(username=data['username'])
         if not user.check_password(data['password']):
             return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        token = Token.objects.create(user=user)
+        token, _ = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
     except ObjectDoesNotExist:
         return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -41,3 +44,28 @@ def get_random_str(length):
     return ''.join(
         random.choice(string.ascii_uppercase + string.digits)
         for _ in range(length))
+
+
+class TodoViewSet(viewsets.ModelViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+    # def list(self, request):
+    #     todos = Todo.objects.filter(user=request.user)
+    #     return Response(TodoSerializer(todos, many=True).data)
+
+    # def create(self, request):
+    #     pass
+
+    # def retrieve(self, request, pk=None):
+    #     todo = Todo.objects.get(pk=pk)
+    #     return Response(TodoSerializer(todo).data)
+
+    # def update(self, request, pk=None):
+    #     pass
+
+    # def partial_update(self, request, pk=None):
+    #     pass
+
+    # def destroy(self, request, pk=None):
+    #     pass
