@@ -18,6 +18,6 @@ from api import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/login', views.login),
-    url(r'^api/casual', views.get_casual),
+    url(r'^api/users/login', views.login),
+    url(r'^api/users/casual', views.get_casual),
 ]

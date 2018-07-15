@@ -16,7 +16,7 @@ def login(request):
     """
     data = request.data
     try:
-        user = User.objects.get(username=data['userName'])
+        user = User.objects.get(username=data['username'])
         if not user.check_password(data['password']):
             return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         token = Token.objects.create(user=user)
