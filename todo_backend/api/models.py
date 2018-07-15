@@ -13,7 +13,7 @@ class Todo(models.Model):
     user = models.ForeignKey(User)
     # [Automatic primary key fields](https://docs.djangoproject.com/en/1.8/topics/db/models/#automatic-primary-key-fields)
     title = models.CharField(max_length=20)
-    detail = models.CharField(max_length=200, default='')
+    detail = models.CharField(max_length=200, blank=True, default='')
     done = models.BooleanField(default=False)
     priority = models.CharField(max_length=1, choices=PRIORITIES, default=NONE)
     expires = models.DateTimeField(blank=True, null=True)
