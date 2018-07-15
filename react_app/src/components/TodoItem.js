@@ -12,10 +12,9 @@ function TodoItem(props) {
                         <input
                             type="checkbox"
                             checked={props.value.done}
-                            onChange={event => {
-                                console.log(event.target);
-                                props.onDoneChange(event.target.value === "on");
-                            }}
+                            onChange={event =>
+                                props.onDoneChange(event.target.checked)
+                            }
                         />
                     </Col>
                     <Col xs="10">

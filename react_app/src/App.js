@@ -1,34 +1,18 @@
 import React, { Component } from "react";
-import { ListGroup } from "reactstrap";
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    Redirect,
+} from "react-router-dom";
 import logo from "./logo.svg";
 import "./App.css";
-import TodoItem from "./components/TodoItem";
-import TodoInput from "./components/TodoInput";
+import Auth from "./components/Auth";
+import Todo from "./components/Todo";
+import util from "./utils/util";
 
 class App extends Component {
-    state = {
-        todos: [],
-    };
-
     render() {
-        const todos = this.state.todos.map(todo => (
-            <TodoItem
-                value={todo}
-                key={todo.id}
-                onDoneChange={done => {
-                    todo.done = done;
-                    const todos = this.state.todos.filter(
-                        x => x.id !== todo.id,
-                    );
-                    todos.push(todo);
-                    this.setState({ todos });
-                }}
-                onDelete={() => {
-                    const todos = this.state.todos.filter(x => x !== todo);
-                    this.setState({ todos });
-                }}
-            />
-        ));
         return (
             <div className="App">
                 <header className="App-header">
@@ -39,16 +23,28 @@ class App extends Component {
                     To get started, edit <code>src/App.js</code> and save to
                     reload.
                 </p>
-                <div style={{ width: "500px", margin: "auto" }}>
-                    <TodoInput
-                        onAdd={todo =>
-                            this.setState({
-                                todos: this.state.todos.concat(todo),
-                            })
-                        }
-                    />
-                    <ListGroup style={{ marginTop: "17px" }}>{todos}</ListGroup>
-                </div>
+                <Router>
+                    <div
+                        style={{
+                            width: "500px",
+                            margin: "auto",
+                            textAlign: "left",
+                        }}
+                    >
+                        <Route
+                            exact
+                            path="/"
+                            render={() =>
+                                !util.isLogined() ? (
+                                    <Redirect to="/login" />
+                                ) : (
+                                    <Todo />
+                                )
+                            }
+                        />
+                        <Route path="/login" component={Auth} />
+                    </div>
+                </Router>
             </div>
         );
     }
