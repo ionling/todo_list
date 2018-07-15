@@ -11,7 +11,10 @@ const isLogined = () => localStorage.getItem(tokenKey) !== null;
  */
 const storeToken = token => localStorage.setItem(tokenKey, token);
 
+const getToken = () => localStorage.getItem(tokenKey);
+
 export default {
     isLogined,
+    getToken,
     storeToken,
 };

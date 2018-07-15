@@ -7,6 +7,10 @@ class Todo {
     priority;
     expires;
 
+    // Inited in Todo.js when POST a new Todo.
+    lastUpdate;
+    lastUpload;
+
     constructor(title) {
         this.title = title;
         Todo.maxId++;
