@@ -30,6 +30,30 @@ add, delete, complete todo, and list all todos
 -   Python v2.7
 -   PostgreSQL
 
+## Running on local
+
+```sh
+# Init db
+docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=mysecret -d postgres:13-alpine
+
+# Run backend
+cd todo_backend
+vim .env
+pipenv install
+pipenv shell
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver 8624
+
+# Run app
+cd ../react_app
+npm install
+npm start
+
+# Done, open http://localhost:3000/ and login with the user created by
+# `python manage.py createsuperuser`.
+```
+
 ## Models
 
 ```js
